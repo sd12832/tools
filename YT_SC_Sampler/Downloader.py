@@ -23,16 +23,29 @@ class Downloader:
 			print(f'{codec} is not a valid format')
 			sys.exit(1)
 
+
+	def get_latest_file(self):
+
+		# HACK! Getting the latest changed file. Not so atomic 
+		# but in practice  most probably not a problem
+
+		import glob
+		import os
+
+		list_of_files = glob.glob(os.getcwd() + '/*')
+		latest_file = max(list_of_files, key=os.path.getctime)
+		latest_file = latest_file.replace(os.getcwd() + '/', '')
+		
+		return latest_file
+
+
 	def YT_extract(self, link):
 
 		with youtube_dl.YoutubeDL(self.ydl_opts) as ydl:
-			ydl.download([link]) 
+			ydl.download([link])
 
-	    # TODO: output template the output
-	    # TODO: 
+		return self.get_latest_file()
 
-		output_file_name = ''
-		return output_file_name
 
 	def SC_extract(self, link):
 

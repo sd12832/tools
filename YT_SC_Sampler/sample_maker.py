@@ -5,7 +5,7 @@ from Downloader import *
 from urllib.parse import urlparse
 # TODO: Checks for particular libraries
 
-SAMPLES = '/Users/sharanduggirala/Desktop/samples/'
+SAMPLES = os.path.expanduser("~") + '/Desktop/samples/'
 
 # Test Variables
 TEST = 0
@@ -15,6 +15,7 @@ YT_TEST_SONG = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 def url_extract(link): 
 
 	return urlparse(link).netloc
+
 
 def main(link):
 
@@ -29,10 +30,16 @@ def main(link):
 
 	if url == 'www.youtube.com':
 		file_name = DL.YT_extract(link)
+		os.rename(os.getcwd() + '/' + file_name, 
+			SAMPLES + file_name.replace(' (Video)-' +
+										 link.split('=')[-1], ''))
+
 	elif url == 'www.soundcloud.com/':
 		file_name = DL.soundcloud_extract(link)
+
 	else:
-		print('Link is not Youtube or Soundcloud. Please use either of the websites.')
+		print('Link is not Youtube or Soundcloud.')
+		print('Please use either of the websites.')
 
 	print(f'The output file name is {file_name}')
 
@@ -50,5 +57,3 @@ if __name__== "__main__":
 		main(sys.argv[1])
 	else:
 		unittest.main()
-
-
