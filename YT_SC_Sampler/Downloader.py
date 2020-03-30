@@ -1,6 +1,6 @@
 import sys
 import youtube_dl
-from sclib import SoundcloudAPI, Track
+# from sclib import SoundcloudAPI, Track, Playlist
 
 class Downloader:
 
@@ -50,13 +50,17 @@ class Downloader:
 
 	def SC_extract(self, link):
 
-		api = SoundcloudAPI() 
-		track = api.resolve(link)
-		assert type(track) is Track
+		# TODO: Try and look more into the SoundCloud API for universal downloads. 
+		# Some websites manage it for some reason. Not sure why an API cannot. Has
+		# to be a seperate project. 
 
-		filename = f'./{track.artist} - {track.title}.mp3'
+		# api = SoundcloudAPI() 
+		# track = api.resolve(link)
+		# assert type(track) is Track
 
-		with open(filename, 'wb+') as fp:
-		    track.write_mp3_to(fp)
+		# filename = f'./{track.artist} - {track.title}.mp3'
 
-		return filename
+		# with open(filename, 'wb+') as fp:
+		#     track.write_mp3_to(fp)
+
+		return ''
