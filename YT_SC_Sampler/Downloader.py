@@ -1,5 +1,6 @@
 import sys
 import youtube_dl
+from sclib import SoundcloudAPI, Track
 
 class Downloader:
 
@@ -49,5 +50,13 @@ class Downloader:
 
 	def SC_extract(self, link):
 
-		output_file_name = ''
-		return output_file_name
+		api = SoundcloudAPI() 
+		track = api.resolve(link)
+		assert type(track) is Track
+
+		filename = f'./{track.artist} - {track.title}.mp3'
+
+		with open(filename, 'wb+') as fp:
+		    track.write_mp3_to(fp)
+
+		return filename

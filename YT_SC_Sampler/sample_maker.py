@@ -2,12 +2,13 @@ import sys, re, os, unittest
 from Hasher import Hasher
 from Downloader import Downloader
 from urllib.parse import urlparse
+
 # TODO: Checks for particular libraries
 
 SAMPLES = os.path.expanduser("~") + '/Desktop/samples/'
 
 # Test Variables
-TEST = 1
+TEST = 0
 YT_TEST_SONG = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 
 
@@ -33,12 +34,18 @@ def extract(link):
 			SAMPLES + file_name.replace(' (Video)-' +
 										 link.split('=')[-1], ''))
 
-	elif url == 'www.soundcloud.com/':
-		file_name = DL.soundcloud_extract(link)
+	elif url == 'soundcloud.com':
+		file_name = DL.SC_extract(link)
+		print('Currently not supporting Soundcloud due to API Issues.')
+		sys.exit(1)
+		sound = AudioSegment.from_mp3(filename)
+		sound.export(SAMPLES + filename[:-4], format="wav")
+		os.remove('./' + file_name)
 
 	else:
 		print('Link is not Youtube or Soundcloud.')
 		print('Please use either of the websites.')
+		sys.exit(1)
 
 	return file_name
 
