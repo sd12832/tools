@@ -1,14 +1,13 @@
-import sys, re, os
-import unittest
-import Hasher
-from Downloader import *
+import sys, re, os, unittest
+from Hasher import Hasher
+from Downloader import Downloader
 from urllib.parse import urlparse
 # TODO: Checks for particular libraries
 
 SAMPLES = os.path.expanduser("~") + '/Desktop/samples/'
 
 # Test Variables
-TEST = 0
+TEST = 1
 YT_TEST_SONG = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 
 
@@ -17,7 +16,7 @@ def url_extract(link):
 	return urlparse(link).netloc
 
 
-def main(link):
+def extract(link):
 
 	# Check is sample folder exists
 	if not os.path.isdir(SAMPLES):
@@ -41,19 +40,46 @@ def main(link):
 		print('Link is not Youtube or Soundcloud.')
 		print('Please use either of the websites.')
 
+	return file_name
+
+
+def main(link):
+
+	file_name = extract(link)
 	print(f'The output file name is {file_name}')
 
 
-class MinerTest(unittest.TestCase): 
-  
-    def YT_test(self):         
-        self.assertTrue(True) 
+class Test(unittest.TestCase): 
 
-    def SC_Test(self):         
-        self.assertTrue(True) 
+	# def __init__(self, *args, **kwargs):
+	# 	super(TestingClass, self).__init__(*args, **kwargs)
+	# 	self.H = Hasher()
+
+
+	def test_YT(self): 
+		self.H = Hasher()
+		self.assertTrue(True) 
+
+		if os.path.exists(os.getcwd() + '/' + 'test_hash.txt'):
+			file_name = extract(YT_TEST_SONG)
+			comp = self.H.compare_file_txt(SAMPLES + file_name.replace(' (Video)-' + 
+							YT_TEST_SONG.split('=')[-1], ''), 
+							os.getcwd() + '/' + 'test_hash.txt')
+			self.assertTrue(comp)
+
+		else:
+
+			H.YT_create_hash(YT_TEST_SONG)
+			print('Test Hash was not created till now. Test Again')
+
+
+	def test_SC(self):    
+
+		self.assertTrue(True) 
   
 if __name__== "__main__":
-	if not TEST:
-		main(sys.argv[1])
-	else:
+
+	if TEST:
 		unittest.main()
+	else:
+		main(sys.argv[1])

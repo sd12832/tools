@@ -1,12 +1,9 @@
-# Hashes a file/uses Downloader.py to download and 
+import hashlib
 
 class Hasher:
 
-	import hashlib 
-
 	def __init__(self, hash_algo='md5'): 
-
-		# TODO: support for more sums
+		# TODO: support for more hash algos
 		self.hash_algo = hash_algo 
 
 
@@ -15,31 +12,23 @@ class Hasher:
 		return hashlib.md5(open(filename, 'rb').read()).hexdigest()
 
 
-	def download_hash_file(self, file):
+	def compare_file_txt(self, filename, hash_txt_file):
+		# Useful for when there is an MD5 txt in the folder
 
-		return
+		hash1 = self.hash_file(filename)
 
-	def compare_txt_hash(self, filename, hash_txt):
-
-		hash1 = hashlib.md5(open(filename1, 'rb').read()).hexdigest()
-
-		if hash1 == hash_txt:
+		if hash1 == open(hash_txt_file).readline():
 			return True
 
 		return False
 
 
-	def compare_file_hash(self, filename, filename2):
+	def YT_create_hash(self, link, output_loc='test_hash.txt'):
 
-		hash1 = hashlib.md5(open(filename1, 'rb').read()).hexdigest()
-		hash2 = hashlib.md5(open(filename2, 'rb').read()).hexdigest()
+		DL = Downloader()
+		file_name = DL.YT_extract(link)
+		hash_txt = self.hash_file(os.getcwd() + '/' + file_name)
+		o_file = open(output_loc, 'w')
+		o_file.write(hash_txt)
+		o_file.close()
 
-		if hash1 == hash2:
-			return True
-
-		return False
-
-
-	def download_txt_hash(self, link, hash_txt):
-
-		return
