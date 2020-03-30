@@ -1,0 +1,3 @@
+[submodule "YT_SC_Sampler/audio_to_midi_melodia"]
+	path = YT_SC_Sampler/audio_to_midi_melodia
+	url = https://github.com/sd12832/audio_to_midi_melodia/

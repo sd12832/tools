@@ -1,5 +1,6 @@
 import sys, re, os, unittest
 from Hasher import Hasher
+from Detect import Detect
 from Downloader import Downloader
 from urllib.parse import urlparse
 import music21
@@ -13,8 +14,17 @@ TEST = 0
 YT_TEST_SONG = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 
 
-# def detect_key():
-
+def detect_key(wav_location):
+	D = Detect()
+	bpm = D.detect(wav_location)
+	sys.exit(1)
+	score = music21.converter.parse(os.getcwd() + '/' + file_name)
+	key1 = score.analyze('Krumhansl')
+	key2 = score.analyze('AardenEssen')
+	if key1 != key2: 
+		print(key1, key2)
+	else:
+		print(key1)
   
 
 def url_extract(link): 
@@ -36,16 +46,11 @@ def extract(link):
 	if url == 'www.youtube.com':
 		file_name = DL.YT_extract(link)
 
-		score = music21.converter.parse(os.getcwd() + '/' + file_name)
-		key1 = score.analyze('Krumhansl')
-		key2 = score.analyze('AardenEssen')
-		if key1 != key2: 
-			print(key1, key2)
-		else:
-			print(key1)
-
 		os.rename(os.getcwd() + '/' + file_name, 
 			SAMPLES + file_name.replace(' (Video)-' +
+										 link.split('=')[-1], ''))
+
+		detect_key(SAMPLES + file_name.replace(' (Video)-' +
 										 link.split('=')[-1], ''))
 
 	elif url == 'soundcloud.com':
